@@ -1,31 +1,39 @@
-version: '3'
+version: "3.7"
 
 services:
-  backend:
-    build: ./backend
-    image: peiqixin/backend:latest
+  server:
+    container_name: server
+    build:
+      context: ./server
+      dockerfile: Dockerfile.dev
     ports:
-      - 1992:1992
-    links:
-      - mongo
+      - "3000:3000"
+    expose:
+      - "3000"
     environment:
-      - MONGO_HOST=mongo
-      - MONGO_NAME=demo
-  frontend:
-    build: ./frontend
-    image: peiqixin/frontend:latest
-    links:
-      - backend  
+      NODE_ENV: development
+      PORT: 3000
+
+  client:
+    image: nginx:alpine
+    container_name: client
+    build:
+      context: ./client
+      dockerfile: Dockerfile.dev
+    ports:
+      - "8080:8080"
+    expose:
+      - "8080"
+
+  nginx:
+    container_name: nginx
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    volumes:
+      - .:/app
     ports:
       - "80:80"
-      - "443:443"
-  mongo:
-    image: mongo:3.4.9
-    environment:
-      - MONGO_DATA_DIR=/data/db
-      - MONGO_LOG_DIR=/data/log
-    ports:
-      - 27017:27017
-    volumes:
-      - ./data/mongo:/data/db
-
+    # links:
+    #   - server
+    #   - client

@@ -1,0 +1,11 @@
+FROM node:12-alpine
+ENV PORT 3000
+
+ADD . /app/backend
+WORKDIR /app/backend
+
+RUN echo PORT = $PORT
+EXPOSE 3000
+
+CMD ["dev"]
+# EXPOSE 6000

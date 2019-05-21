@@ -1,0 +1,15 @@
+FROM node:12-alpine
+
+ENV PORT 3000
+
+ADD . /app/backend
+WORKDIR /app/backend
+
+# RUN echo PORT = $PORT
+
+# RUN curl -o- -L https://yarnpkg.com/install.sh | bash
+# RUN $HOME/.yarn/bin/yarn install
+
+EXPOSE 3000
+CMD ["yarn", "dev"]
+# CMD ["nodemon", "--watch", "./src", "-e", "js,ts,json", "--exec", "ts-node", "src/index.ts"]

@@ -1,0 +1,10 @@
+FROM node:12-alpine
+
+ENV PORT 8080
+
+ADD . /app/frontend
+WORKDIR /app/frontend
+
+EXPOSE 8080
+CMD ["yarn", "dev"]
+# CMD ["nodemon", "--watch", "./src", "-e", "js,ts,json", "--exec", "ts-node", "src/index.ts"]

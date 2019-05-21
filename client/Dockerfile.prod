@@ -1,0 +1,12 @@
+FROM node:12-alpine
+RUN yarn build
+
+COPY ./.nuxt /app/frontend
+COPY ./package.json /app/frontend
+
+RUN yarn install --production
+WORKDIR /app/frontend/.nuxt
+
+EXPOSE 8080
+
+CMD ["node", "index.js"]
